@@ -1,0 +1,16 @@
+@import "styles/colors.scss";
+
+.Link {
+  display: flex;
+  width: max-content;
+  color: $text-dark;
+
+  & img {
+    height: 2rem;
+    margin-left: 1.1rem;
+  }
+}
+
+.Active {
+  color: $active;
+}
