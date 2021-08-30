@@ -1,7 +1,7 @@
-import React from "react";
+import { Title } from "UI";
 
 const Home = () => {
-  return <div>Home</div>;
+  return <Title>Home</Title>;
 };
 
 export default Home;

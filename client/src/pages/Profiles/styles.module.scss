@@ -1,0 +1,9 @@
+.ProfilesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  & > section {
+    margin-bottom: 6rem;
+  }
+}
