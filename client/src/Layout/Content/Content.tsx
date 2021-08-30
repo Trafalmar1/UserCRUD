@@ -1,6 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 
-import { Home, Profiles } from "pages";
+import { Dashboard, Home, Profiles } from "pages";
 
 import classes from "./styles.module.scss";
 
@@ -10,6 +10,9 @@ const Content = () => {
       <Switch>
         <Route path="/profiles" exact>
           <Profiles />
+        </Route>
+        <Route path="/dashboard" exact>
+          <Dashboard />
         </Route>
         <Route path="/" exact>
           <Home />
