@@ -1,0 +1,15 @@
+@import "styles/colors.scss";
+
+.Container {
+  margin-top: 4.5rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 1.2rem;
+  background-color: $button;
+  color: $text-dark;
+  cursor: pointer;
+  &:hover {
+    background-color: $active;
+    color: $text-light;
+  }
+}

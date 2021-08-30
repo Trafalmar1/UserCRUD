@@ -1,0 +1,29 @@
+@import "styles/colors.scss";
+
+.Controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
+
+  & label {
+    color: $label;
+    font-weight: normal;
+    font-size: 1.8rem;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  & input {
+    font-size: 2.4rem;
+    font-weight: normal;
+    color: $active;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid $active;
+    outline: none;
+    :focus {
+      border-bottom: 2px solid $active;
+    }
+  }
+}

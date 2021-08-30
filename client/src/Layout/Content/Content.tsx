@@ -1,13 +1,22 @@
 import { Switch, Route } from "react-router-dom";
 
-import { Dashboard, Home, Profiles, Users } from "pages";
+import { Dashboard, Home, Login, Profiles, Users } from "pages";
 
 import classes from "./styles.module.scss";
+import useFullscreen from "hooks/useFullscreen";
 
 const Content = () => {
+  const { isFullscreen } = useFullscreen();
   return (
-    <section className={classes.Container}>
+    <section
+      className={[classes.Container, isFullscreen && classes.Fullscreen].join(
+        " "
+      )}
+    >
       <Switch>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
         <Route path="/users" exact>
           <Users />
         </Route>

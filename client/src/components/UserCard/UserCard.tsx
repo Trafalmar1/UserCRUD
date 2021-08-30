@@ -13,7 +13,7 @@ const UserCard: FC<UserProps> = ({ username, email, profiles, id }) => {
     <Card>
       <p>{username}</p>
       <p>{email}</p>
-      <p>{`${profiles} ${profiles == 1 ? "profile" : "profiles"}`}</p>
+      <p>{`${profiles} ${profiles === 1 ? "profile" : "profiles"}`}</p>
     </Card>
   );
 };

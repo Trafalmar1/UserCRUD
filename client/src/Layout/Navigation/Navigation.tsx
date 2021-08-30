@@ -1,13 +1,17 @@
-import classes from "./styles.module.scss";
+import { NavLink } from "react-router-dom";
+
 import avatar from "assets/pics/avatar.png";
 import profiles from "assets/pics/Profiles.png";
 import dashboard from "assets/pics/Dashboard.png";
 import users from "assets/pics/Users.png";
-
 import { NavButton } from "UI";
-import { NavLink } from "react-router-dom";
+
+import classes from "./styles.module.scss";
+import useFullscreen from "hooks/useFullscreen";
 
 const Navigation = () => {
+  const { isFullscreen } = useFullscreen();
+  if (isFullscreen) return null;
   return (
     <div className={classes.Navigation}>
       <NavLink to="/" className={classes.AvatarContainer}>
