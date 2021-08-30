@@ -1,6 +1,5 @@
-import { ProfileCard } from "components";
+import { ProfileCard, UserDetails } from "components";
 import AddNewProfile from "components/ProfileCard/AddNewProfile/AddNewProfile";
-import { classicNameResolver } from "typescript";
 import { Title } from "UI";
 
 import classes from "./styles.module.scss";
@@ -32,6 +31,9 @@ const dummyData = [
 const Profiles = () => {
   return (
     <>
+      <div className={classes.UserDetailsContainer}>
+        <UserDetails id="1" />
+      </div>
       <Title>Profiles:</Title>
       <div className={classes.ProfilesContainer}>
         {dummyData.map((profile) => (

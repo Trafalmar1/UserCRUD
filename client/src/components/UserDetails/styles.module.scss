@@ -1,0 +1,39 @@
+@import "styles/colors.scss";
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $text-dark;
+
+  & h1 {
+    font-size: 3.2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+
+  & h3 {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+  & .Controls {
+    display: flex;
+
+    & button {
+      margin: 0 1rem;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      :hover svg {
+        stroke: $active;
+      }
+    }
+    & svg {
+      height: 2rem;
+      stroke: $text-dark;
+    }
+  }
+}

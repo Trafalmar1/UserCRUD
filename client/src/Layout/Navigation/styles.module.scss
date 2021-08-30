@@ -1,7 +1,8 @@
 @import "styles/colors.scss";
 
 .Navigation {
-  position: relative;
+  position: fixed;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;

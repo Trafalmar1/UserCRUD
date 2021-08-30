@@ -1,7 +1,7 @@
 import classes from "./styles.module.scss";
 
 import { Title } from "UI";
-import UserCard from "components/UserCard/UserCard";
+import { UserCard } from "components";
 
 const dummyData = [
   {

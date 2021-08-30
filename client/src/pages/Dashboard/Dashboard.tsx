@@ -1,4 +1,4 @@
-import DashboardItem from "components/DashboardItem/DashboardItem";
+import { DashboardItem } from "components";
 import { Title } from "UI";
 
 import classes from "./styles.module.scss";

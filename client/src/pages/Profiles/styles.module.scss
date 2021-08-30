@@ -1,9 +1,15 @@
 .ProfilesContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   width: 100%;
   & > section {
     margin-bottom: 6rem;
+    margin-right: 6rem;
   }
+}
+
+.UserDetailsContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
