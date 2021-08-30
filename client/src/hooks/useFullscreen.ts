@@ -7,7 +7,7 @@ const useFullscreen = () => {
   useEffect(() => {
     if (
       location.pathname.includes("login") ||
-      location.pathname.includes("logout")
+      location.pathname.includes("sign-up")
     ) {
       setIsFullscreen(true);
     } else {

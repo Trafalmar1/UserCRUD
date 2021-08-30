@@ -1,6 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 
-import { Dashboard, Home, Login, Profiles, Users } from "pages";
+import { Dashboard, Home, Login, Profiles, SignUp, Users } from "pages";
 
 import classes from "./styles.module.scss";
 import useFullscreen from "hooks/useFullscreen";
@@ -14,6 +14,9 @@ const Content = () => {
       )}
     >
       <Switch>
+        <Route path="/sign-up" exact>
+          <SignUp />
+        </Route>
         <Route path="/login" exact>
           <Login />
         </Route>

@@ -1,0 +1,56 @@
+@import "styles/colors.scss";
+
+.Container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 2.5rem;
+
+  & input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  & label {
+    cursor: pointer;
+    font-size: 2.4rem;
+    font-weight: normal;
+    letter-spacing: 0.1rem;
+    margin-left: 1.2rem;
+    user-select: none;
+  }
+
+  & .Checkmark {
+    position: relative;
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+    border: 0.1rem solid $active;
+    box-sizing: border-box;
+    border-radius: 0.4rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      height: 1.4rem;
+      width: 1.4rem;
+      border-radius: 0.4rem;
+      background-color: $active;
+    }
+  }
+
+  & input:checked ~ .Checkmark::before {
+    display: block;
+  }
+}

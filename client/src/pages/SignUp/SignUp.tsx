@@ -1,23 +1,27 @@
 import { Input } from "components";
 import { FormEvent, useState } from "react";
-import { AuthButton, AuthTitle } from "UI";
+import { AuthButton, AuthTitle, Checkbox } from "UI";
 
 import classes from "./styles.module.scss";
 
-type LoginFormData = {
+type SignUpFormData = {
+  username: string;
   email: string;
   password: string;
+  isAdmin: boolean;
 };
 
-const initialData: LoginFormData = {
+const initialData: SignUpFormData = {
+  username: "",
   email: "",
   password: "",
+  isAdmin: false,
 };
 
-const Login = () => {
-  const [form, setForm] = useState<LoginFormData>(initialData);
+const SignUp = () => {
+  const [form, setForm] = useState<SignUpFormData>(initialData);
 
-  const formChangeHandler = (name: string, value: string) => {
+  const formChangeHandler = (name: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -27,8 +31,14 @@ const Login = () => {
 
   return (
     <div className={classes.Center}>
-      <AuthTitle>Sign in</AuthTitle>
+      <AuthTitle>Create your account</AuthTitle>
       <form onSubmit={submitHandler} className={classes.Form}>
+        <Input
+          label="Username"
+          value={form.username}
+          name="username"
+          onChange={formChangeHandler}
+        />
         <Input
           label="Email"
           value={form.email}
@@ -42,10 +52,16 @@ const Login = () => {
           name="password"
           onChange={formChangeHandler}
         />
-        <AuthButton type="submit" name={"Sign In"} />
+        <Checkbox
+          label="is admin"
+          value={form.isAdmin}
+          name="isAdmin"
+          onChange={formChangeHandler}
+        />
+        <AuthButton type="submit" name={"Sign Up"} />
       </form>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

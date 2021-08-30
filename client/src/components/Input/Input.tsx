@@ -24,7 +24,13 @@ const Input: FC<InputProps> = ({
   return (
     <div className={classes.Controls}>
       <label htmlFor={name}>{label}</label>
-      <input type={type} value={value} name={name} onChange={changeHandler} />
+      <input
+        type={type}
+        value={value}
+        id={name}
+        name={name}
+        onChange={changeHandler}
+      />
     </div>
   );
 };
