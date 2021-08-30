@@ -5,6 +5,7 @@ import pencil from "assets/svg/pencil.svg";
 import trash from "assets/svg/delete.svg";
 
 import classes from "./styles.module.scss";
+import Card from "components/Card/Card";
 
 type ProfileCardProps = {
   id: string;
@@ -20,14 +21,8 @@ const ProfileCard: FC<ProfileCardProps> = ({
   birthday,
   city,
 }) => {
-  return (
-    <section className={classes.Container}>
-      <div className={classes.Content}>
-        <p>{username}</p>
-        <p>{gender}</p>
-        <p>{birthday}</p>
-        <p>{city}</p>
-      </div>
+  const renderControls = () => {
+    return (
       <div className={classes.CardControls}>
         <button>
           <p>edit</p>
@@ -38,7 +33,16 @@ const ProfileCard: FC<ProfileCardProps> = ({
           <ReactSVG src={trash} />
         </button>
       </div>
-    </section>
+    );
+  };
+
+  return (
+    <Card controls={renderControls()}>
+      <p>{username}</p>
+      <p>{gender}</p>
+      <p>{birthday}</p>
+      <p>{city}</p>
+    </Card>
   );
 };
 

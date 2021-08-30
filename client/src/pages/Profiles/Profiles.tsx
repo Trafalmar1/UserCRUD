@@ -35,7 +35,7 @@ const Profiles = () => {
       <Title>Profiles:</Title>
       <div className={classes.ProfilesContainer}>
         {dummyData.map((profile) => (
-          <ProfileCard {...profile} />
+          <ProfileCard key={profile.id} {...profile} />
         ))}
         <AddNewProfile />
       </div>

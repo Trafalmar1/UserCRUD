@@ -1,14 +1,11 @@
 @import "styles/colors.scss";
 
-.Container {
+.Add {
   border: 0.1rem solid $card-border;
   background-color: $card-background;
   border-radius: 1.6rem;
   width: 32rem;
   overflow: hidden;
-}
-
-.Add {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,21 +25,6 @@
     font-weight: 400;
     font-size: 2rem;
     letter-spacing: 0.075rem;
-  }
-}
-
-.Content {
-  padding: 3.5rem;
-  padding-bottom: 2rem;
-  & > p:first-child {
-    font-weight: 500;
-    margin-bottom: 2rem;
-  }
-  & > p {
-    font-size: 2.4rem;
-    text-align: center;
-    color: $card-text;
-    margin-bottom: 1.5rem;
   }
 }
 

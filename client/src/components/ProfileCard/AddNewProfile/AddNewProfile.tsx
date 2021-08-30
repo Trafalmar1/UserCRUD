@@ -6,7 +6,7 @@ import classes from "../styles.module.scss";
 
 const AddNewProfile = () => {
   return (
-    <div className={[classes.Container, classes.Add].join(" ")}>
+    <div className={classes.Add}>
       <ReactSVG src={add} />
       <h3>Create new Profile</h3>
     </div>
