@@ -1,34 +1,34 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { ReactSVG } from "react-svg";
 
-import { AuthButton, Label, Modal } from "UI";
-import { Input } from "components";
+import Input from "components/Input/Input";
+import RadioButton from "components/RadioButton/RadioButton";
 import check from "assets/svg/check.svg";
 import cross from "assets/svg/cross.svg";
+import { AuthButton, Label, Modal } from "UI";
+import { User } from "components/UserDetails/UserDetails";
 
 import classes from "./styles.module.scss";
-import RadioButton from "components/RadioButton/RadioButton";
 
 type ProfileModalProps = {
   visible?: boolean;
+  user?: User;
   toggle?: VoidFunction;
 };
 
 type FormData = {
-  name: string;
-  gender: string;
-  birthday: string;
-  city: string;
+  username: string;
+  email: string;
+  role: string;
 };
 
 const initialData: FormData = {
-  name: "",
-  gender: "male",
-  birthday: "",
-  city: "",
+  username: "",
+  email: "",
+  role: "",
 };
 
-const ProfileModal: FC<ProfileModalProps> = ({ visible, toggle }) => {
+const UserModal: FC<ProfileModalProps> = ({ visible, user, toggle }) => {
   const [form, setForm] = useState<FormData>(initialData);
 
   const formChangeHandler = (name: string, value: string | boolean) => {
@@ -39,46 +39,43 @@ const ProfileModal: FC<ProfileModalProps> = ({ visible, toggle }) => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    if (!user) return;
+    setForm(user);
+  }, [user]);
+
   return (
     <Modal visible={visible} toggle={toggle}>
       <form onSubmit={submitHandler} className={classes.Form}>
         <Input
-          label="name:"
-          value={form.name}
+          label="user name:"
+          value={form.username}
           name="name"
           onChange={formChangeHandler}
         />
-
-        <Label margin="0 0 2rem 0">gender:</Label>
+        <Input
+          label="email:"
+          value={form.email}
+          name="email"
+          onChange={formChangeHandler}
+        />
+        <Label margin="0 0 2rem 0">role:</Label>
         <div className={classes.Row}>
           <RadioButton
-            name="gender"
-            value="male"
-            label="male"
-            checked={form.gender === "male"}
+            name="role"
+            value="admin"
+            label="admin"
+            checked={form.role === "admin"}
             onChange={formChangeHandler}
           />
           <RadioButton
-            name="gender"
-            value="female"
-            label="female"
-            checked={form.gender === "female"}
+            name="role"
+            value="user"
+            label="user"
+            checked={form.role === "user"}
             onChange={formChangeHandler}
           />
         </div>
-
-        <Input
-          label="birthday:"
-          value={form.birthday}
-          name="birthday"
-          onChange={formChangeHandler}
-        />
-        <Input
-          label="city:"
-          value={form.city}
-          name="city"
-          onChange={formChangeHandler}
-        />
         <div className={classes.Row}>
           <AuthButton type="submit">
             <ReactSVG src={check} />
@@ -92,4 +89,4 @@ const ProfileModal: FC<ProfileModalProps> = ({ visible, toggle }) => {
   );
 };
 
-export default ProfileModal;
+export default UserModal;

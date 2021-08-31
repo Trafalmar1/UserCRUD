@@ -6,6 +6,7 @@ import UserDetails from "./UserDetails/UserDetails";
 import Input from "./Input/Input";
 import ProfileModal from "./ProfileModal/ProfileModal";
 import RadioButton from "./RadioButton/RadioButton";
+import UserModal from "./UserModal/UserModal";
 
 export {
   Input,
@@ -16,4 +17,5 @@ export {
   UserDetails,
   ProfileModal,
   RadioButton,
+  UserModal,
 };
