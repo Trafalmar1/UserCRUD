@@ -1,5 +1,6 @@
 import { Input } from "components";
 import { FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthButton, AuthTitle } from "UI";
 
 import classes from "./styles.module.scss";
@@ -42,6 +43,7 @@ const Login = () => {
           name="password"
           onChange={formChangeHandler}
         />
+        <Link to="sign-up">Create new account</Link>
         <AuthButton type="submit" name={"Sign In"} />
       </form>
     </div>

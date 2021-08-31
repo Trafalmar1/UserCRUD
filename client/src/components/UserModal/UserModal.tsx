@@ -6,9 +6,9 @@ import RadioButton from "components/RadioButton/RadioButton";
 import check from "assets/svg/check.svg";
 import cross from "assets/svg/cross.svg";
 import { AuthButton, Label, Modal } from "UI";
-import { User } from "components/UserDetails/UserDetails";
 
 import classes from "./styles.module.scss";
+import { User } from "redux/reducers/userReducer";
 
 type ProfileModalProps = {
   visible?: boolean;

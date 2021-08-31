@@ -6,18 +6,14 @@ import trash from "assets/svg/delete.svg";
 
 import classes from "./styles.module.scss";
 import UserModal from "components/UserModal/UserModal";
+import { User } from "redux/reducers/userReducer";
 
 type UserDetailsProps = {
   id?: string;
 };
 
-export type User = {
-  username: string;
-  email: string;
-  role: string;
-};
-
 const dummyUser: User = {
+  id: "1",
   username: "TrafalMar",
   email: "vladiksav2@gmail.com",
   role: "user",

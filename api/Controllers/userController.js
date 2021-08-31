@@ -2,7 +2,7 @@ const db = require("../db");
 
 class User {
   async getUsers(req, res) {
-    const users = await db.query("SELECT * FROM users");
+    const users = await db.query("SELECT id,username,email,role FROM users");
     res.json(users.rows);
   }
 

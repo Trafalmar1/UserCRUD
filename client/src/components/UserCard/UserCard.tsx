@@ -2,18 +2,19 @@ import Card from "components/Card/Card";
 import { FC } from "react";
 
 type UserProps = {
-  id: string;
   username: string;
   email: string;
-  profiles: number;
+  profiles?: number;
 };
 
-const UserCard: FC<UserProps> = ({ username, email, profiles, id }) => {
+const UserCard: FC<UserProps> = ({ username, email, profiles }) => {
   return (
     <Card>
       <p>{username}</p>
       <p>{email}</p>
-      <p>{`${profiles} ${profiles === 1 ? "profile" : "profiles"}`}</p>
+      <p>{`${profiles ? profiles : 0} ${
+        profiles === 1 ? "profile" : "profiles"
+      }`}</p>
     </Card>
   );
 };

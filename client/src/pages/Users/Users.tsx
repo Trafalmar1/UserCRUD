@@ -1,49 +1,30 @@
-import classes from "./styles.module.scss";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { Title } from "UI";
 import { UserCard } from "components";
+import { useAppDispatch } from "hooks/hooks";
+import { RootState } from "redux/store";
+import { User } from "redux/reducers/userReducer";
+import { getUsers } from "redux/actions/userActions";
 
-const dummyData = [
-  {
-    id: "1",
-    username: "Trafalmar",
-    email: "vladiksav2@gmail.com",
-    profiles: 3,
-  },
-  {
-    id: "3",
-    username: "Trafalmar",
-    email: "vladiksav2@gmail.com",
-    profiles: 1,
-  },
-  {
-    id: "2",
-    username: "Trafalmar",
-    email: "vladiksav2@gmail.com",
-    profiles: 2,
-  },
-  {
-    id: "4",
-    username: "Trafalmar",
-    email: "vladiksav2@gmail.com",
-    profiles: 4,
-  },
-  {
-    id: "5",
-    username: "Trafalmar",
-    email: "vladiksav2@gmail.com",
-    profiles: 6,
-  },
-];
+import classes from "./styles.module.scss";
 
 const Users = () => {
+  const dispatch = useAppDispatch();
+  const { users } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    dispatch(getUsers());
+    console.log(users);
+  }, []);
+
   return (
     <>
       <Title>Users:</Title>
       <div className={classes.ListContainer}>
-        {dummyData.map((user) => (
-          <UserCard key={user.id} {...user} />
-        ))}
+        {!!users &&
+          users?.map((user: User) => <UserCard key={user.id} {...user} />)}
       </div>
     </>
   );

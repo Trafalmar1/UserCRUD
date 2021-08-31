@@ -1,17 +1,22 @@
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import avatar from "assets/pics/avatar.png";
 import profiles from "assets/pics/Profiles.png";
 import dashboard from "assets/pics/Dashboard.png";
 import users from "assets/pics/Users.png";
 import { NavButton } from "UI";
+import { UserReducer } from "redux/reducers/userReducer";
+import useFullscreen from "hooks/useFullscreen";
+import { RootState } from "redux/store";
 
 import classes from "./styles.module.scss";
-import useFullscreen from "hooks/useFullscreen";
 
 const Navigation = () => {
   const { isFullscreen } = useFullscreen();
-  if (isFullscreen) return null;
+  const user: UserReducer = useSelector((state: RootState) => state.user);
+
+  if (isFullscreen || !user?.loggedIn) return null;
   return (
     <div className={classes.Navigation}>
       <NavLink to="/" className={classes.AvatarContainer}>
