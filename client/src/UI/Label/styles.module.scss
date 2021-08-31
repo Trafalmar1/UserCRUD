@@ -1,0 +1,10 @@
+@import "styles/colors.scss";
+
+.Label {
+  display: block;
+  color: $label;
+  font-weight: normal;
+  font-size: 1.8rem;
+  letter-spacing: 0.1rem;
+  margin-bottom: 0.5rem;
+}

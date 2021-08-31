@@ -8,14 +8,14 @@ type SignUpFormData = {
   username: string;
   email: string;
   password: string;
-  isAdmin: boolean;
+  isAdmin: string;
 };
 
 const initialData: SignUpFormData = {
   username: "",
   email: "",
   password: "",
-  isAdmin: false,
+  isAdmin: "",
 };
 
 const SignUp = () => {
@@ -54,7 +54,7 @@ const SignUp = () => {
         />
         <Checkbox
           label="is admin"
-          value={form.isAdmin}
+          value={form.isAdmin === "is admin"}
           name="isAdmin"
           onChange={formChangeHandler}
         />

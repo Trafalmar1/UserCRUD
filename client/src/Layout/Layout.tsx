@@ -10,6 +10,7 @@ const Layout = () => {
       </header>
       <Content />
       <footer></footer>
+      <div id="modal-root"></div>
     </Router>
   );
 };

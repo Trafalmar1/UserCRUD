@@ -1,5 +1,6 @@
-import { ProfileCard, UserDetails } from "components";
+import { ProfileCard, ProfileModal, UserDetails } from "components";
 import AddNewProfile from "components/ProfileCard/AddNewProfile/AddNewProfile";
+import { useState } from "react";
 import { Title } from "UI";
 
 import classes from "./styles.module.scss";
@@ -29,6 +30,12 @@ const dummyData = [
 ];
 
 const Profiles = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible((prev) => !prev);
+  };
+
   return (
     <>
       <div className={classes.UserDetailsContainer}>
@@ -39,8 +46,9 @@ const Profiles = () => {
         {dummyData.map((profile) => (
           <ProfileCard key={profile.id} {...profile} />
         ))}
-        <AddNewProfile />
+        <AddNewProfile onClick={toggleModal} />
       </div>
+      <ProfileModal visible={modalVisible} toggle={toggleModal} />
     </>
   );
 };

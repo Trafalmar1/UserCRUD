@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, useState } from "react";
 
 import classes from "./styles.module.scss";
 
@@ -6,14 +6,14 @@ type CheckboxProps = {
   label: string;
   name: string;
   value: boolean;
-  onChange: (name: string, v: boolean) => void;
+  onChange: (name: string, v: string) => void;
 };
 
 const Checkbox: FC<CheckboxProps> = ({ label, name, value, onChange }) => {
   const [checked, setChecked] = useState(value);
 
-  const toggleHandler = (e: FormEvent<HTMLInputElement>) => {
-    onChange(name, !checked);
+  const toggleHandler = () => {
+    onChange(name, !checked ? label : "");
     setChecked(!checked);
   };
 
@@ -25,7 +25,7 @@ const Checkbox: FC<CheckboxProps> = ({ label, name, value, onChange }) => {
         checked={value}
         onChange={toggleHandler}
       />
-      <span className={classes.Checkmark}></span>
+      <span className={classes.Checkmark} onClick={toggleHandler}></span>
       <label htmlFor={name}>{label}</label>
     </div>
   );

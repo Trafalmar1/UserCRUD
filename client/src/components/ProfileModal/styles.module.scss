@@ -1,0 +1,34 @@
+@import "styles/colors.scss";
+
+.Row {
+  display: flex;
+  justify-content: space-between;
+  & button {
+    width: 10rem;
+    padding: 0.3rem 0;
+    margin-top: 2.5rem;
+    svg {
+      fill: $text-dark;
+    }
+    :hover svg {
+      fill: $text-light;
+    }
+  }
+  &:last-child {
+    margin: 0;
+  }
+  margin-bottom: 2.5rem;
+}
+
+.Label {
+  display: block;
+  color: $label;
+  font-weight: normal;
+  font-size: 1.8rem;
+  letter-spacing: 0.1rem;
+  margin-bottom: 2rem;
+}
+
+.Form {
+  width: 25rem;
+}

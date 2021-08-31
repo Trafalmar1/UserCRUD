@@ -1,4 +1,5 @@
-import { FC, FormEvent, HTMLProps } from "react";
+import { FC, FormEvent } from "react";
+import { Label } from "UI";
 import classes from "./styles.module.scss";
 
 type InputProps = {
@@ -23,7 +24,7 @@ const Input: FC<InputProps> = ({
 
   return (
     <div className={classes.Controls}>
-      <label htmlFor={name}>{label}</label>
+      <Label htmlFor={name}>{label}</Label>
       <input
         type={type}
         value={value}
