@@ -2,7 +2,7 @@ const User = require("../Models/User");
 const bcrypt = require("bcryptjs");
 
 class AuthController {
-  signUp(req, res) {
+  signUp(req, res, next) {
     const { username, password, email, role } = req.body;
     User.findOne({ where: { email: email } })
       .then((result) => {
@@ -16,16 +16,16 @@ class AuthController {
               res.status(201).json(result);
             })
             .catch((err) => {
-              res.json({ error: { message: err.message } });
+              next(err);
             });
         });
       })
       .catch((err) => {
-        res.json({ error: { message: err.message } });
+        next(err);
       });
   }
 
-  signIn(req, res) {
+  signIn(req, res, next) {
     const { email, password } = req.body;
     User.findOne({ where: { email: email } })
       .then((user) => {
@@ -41,11 +41,11 @@ class AuthController {
             res.json("User successfully logged in");
           })
           .catch((err) => {
-            res.json({ error: { message: err.message } });
+            next(err);
           });
       })
       .catch((err) => {
-        res.json({ error: { message: err.message } });
+        next(err);
       });
   }
 }

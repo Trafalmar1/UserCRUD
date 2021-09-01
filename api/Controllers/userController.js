@@ -1,18 +1,17 @@
 const User = require("../Models/User");
-const bcrypt = require("bcryptjs");
 
 class UserController {
-  getUsers(req, res) {
+  getUsers(req, res, next) {
     User.findAll({ attributes: ["id", "username", "email", "role"] })
       .then((result) => {
         res.json(result);
       })
       .catch((err) => {
-        console.log({ error: { message: err.message } });
+        next(err);
       });
   }
 
-  getOneUser(req, res) {
+  getOneUser(req, res, next) {
     const id = req.params.id;
     User.findOne({ where: { id: id } })
       .then((result) => {
@@ -23,11 +22,11 @@ class UserController {
         res.json(result);
       })
       .catch((err) => {
-        res.json({ error: { message: err.message } });
+        next(err);
       });
   }
 
-  updateUser(req, res) {
+  updateUser(req, res, next) {
     const { id, username, email, password, role } = req.body;
 
     User.update({ username, email, password, role }, { where: { id: id } })
@@ -38,11 +37,11 @@ class UserController {
         res.status(200).json("User successfully updated");
       })
       .catch((err) => {
-        res.json({ error: { message: err.message } });
+        next(err);
       });
   }
 
-  deleteUser(req, res) {
+  deleteUser(req, res, next) {
     const id = req.params.id;
     User.destroy({ where: { id: id } })
       .then((result) => {
@@ -52,7 +51,7 @@ class UserController {
         res.status(200).json("User was successfully deleted");
       })
       .catch((err) => {
-        res.json({ error: { message: err.message } });
+        next(err);
       });
   }
 }
