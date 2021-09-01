@@ -9,6 +9,7 @@ export const actions = {
 export const getUsers = () => async (dispatch: AppDispatch) => {
   dispatch({ type: actions.LOADING, payload: { loading: true } });
   const res = await api.getUsers();
+
   dispatch({
     type: actions.GET_USERS,
     payload: { users: res.data, loading: false },

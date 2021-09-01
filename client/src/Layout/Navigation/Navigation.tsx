@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import avatar from "assets/pics/avatar.png";
 import profiles from "assets/pics/Profiles.png";
@@ -11,9 +11,11 @@ import useFullscreen from "hooks/useFullscreen";
 import { RootState } from "redux/store";
 
 import classes from "./styles.module.scss";
+import { logout } from "redux/actions/authActions";
 
 const Navigation = () => {
   const { isFullscreen } = useFullscreen();
+  const dispatch = useDispatch();
   const user: UserReducer = useSelector((state: RootState) => state.user);
 
   if (isFullscreen || !user?.loggedIn) return null;
@@ -34,7 +36,11 @@ const Navigation = () => {
           <NavButton name="Users" to="/users" img={users} />
         </li>
         <li>
-          <NavButton name="Log out" to="/logout" />
+          <NavButton
+            name="Log out"
+            to="/logout"
+            onClick={() => dispatch(logout())}
+          />
         </li>
       </menu>
     </div>

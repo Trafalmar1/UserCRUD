@@ -22,7 +22,7 @@ const Users = () => {
     <>
       <Title>Users:</Title>
       <div className={classes.ListContainer}>
-        {!!users &&
+        {Array.isArray(users) &&
           users?.map((user: User) => <UserCard key={user.id} {...user} />)}
       </div>
     </>

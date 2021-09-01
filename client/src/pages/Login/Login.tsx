@@ -1,6 +1,8 @@
 import { Input } from "components";
 import { FormEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { signIn } from "redux/actions/authActions";
 import { AuthButton, AuthTitle } from "UI";
 
 import classes from "./styles.module.scss";
@@ -17,6 +19,7 @@ const initialData: LoginFormData = {
 
 const Login = () => {
   const [form, setForm] = useState<LoginFormData>(initialData);
+  const dispatch = useDispatch();
 
   const formChangeHandler = (name: string, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -24,6 +27,7 @@ const Login = () => {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    dispatch(signIn({ ...form }));
   };
 
   return (

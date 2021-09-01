@@ -9,6 +9,7 @@ export type LinkProps = {
   exact?: boolean;
   color?: string;
   img?: string;
+  onClick?: VoidFunction;
 };
 
 const NavButton: FC<LinkProps> = ({
@@ -17,9 +18,11 @@ const NavButton: FC<LinkProps> = ({
   to,
   exact,
   color = "limegreen",
+  onClick,
 }) => {
   return (
     <NavLink
+      onClick={onClick}
       className={classes.Link}
       activeClassName={classes.Active}
       to={to}

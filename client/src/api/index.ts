@@ -1,6 +1,6 @@
 import { getUsers } from "./userApi";
-import { signUp } from "./authApi";
+import { signUp, signIn } from "./authApi";
 
-const api = { getUsers, signUp };
+const api = { getUsers, signUp, signIn };
 
 export default api;
