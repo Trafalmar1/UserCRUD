@@ -1,5 +1,6 @@
 const User = require("../Models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 class AuthController {
   signUp(req, res, next) {
@@ -38,7 +39,12 @@ class AuthController {
             if (!doMatch) {
               throw new Error("Password do not match");
             }
-            res.json("User successfully logged in");
+            const token = jwt.sign(
+              { email: email, id: user.id },
+              process.env.SECRET,
+              { expiresIn: "30 days" }
+            );
+            res.status(200).json({ token: token, userId: user.id });
           })
           .catch((err) => {
             next(err);
