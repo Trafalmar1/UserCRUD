@@ -8,7 +8,7 @@ type CheckboxProps = {
   value: boolean;
   checkedValue: string;
   defaultValue: string;
-  onChange: (name: string, v: string) => void;
+  onChange: (name: any, v: string) => void;
 };
 
 const Checkbox: FC<CheckboxProps> = ({

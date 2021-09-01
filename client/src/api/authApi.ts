@@ -6,13 +6,8 @@ type SignUpData = {
   role: string;
 };
 
-type SignInResponse = {
-  token: string;
-  userId: string;
-};
-
 export const signUp = (data: SignUpData) => {
   return Axios.post("/sign-up", { ...data }).then((res) => {
-    console.log(res);
+    return res.data;
   });
 };
