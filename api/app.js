@@ -1,4 +1,5 @@
 const express = require("express");
+const { sequelize } = require("./db");
 
 const app = express();
 const port = 8080;
@@ -11,15 +12,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // error handler
-app.use(function (err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-  res.status(err.status || 500);
-  res.render("error");
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
 });
 
 app.use("/api", usersRouter);
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`);
-});
+sequelize
+  .sync()
+  .then((res) => {
+    console.log(res);
+    app.listen(port, () => {
+      console.log(`App running on port ${port}.`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
