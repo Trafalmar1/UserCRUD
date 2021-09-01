@@ -6,6 +6,7 @@ const port = 8080;
 const cors = require("cors");
 
 const usersRouter = require("./routes/user.routes");
+const authRouter = require("./routes/auth.routes");
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/api", usersRouter);
+app.use("/api", authRouter);
 
 sequelize
   .sync()

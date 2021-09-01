@@ -1,4 +1,5 @@
 const User = require("../Models/User");
+const bcrypt = require("bcryptjs");
 
 class UserController {
   getUsers(req, res) {
@@ -26,27 +27,7 @@ class UserController {
       });
   }
 
-  async createUser(req, res) {
-    const { username, password, email, role } = req.body;
-    User.findOne({ where: { email: email } })
-      .then((result) => {
-        if (!result) return result;
-        throw new Error(`User with ${email} email already exists`);
-      })
-      .then(() => {
-        User.create({ username, email, password, role })
-          .then((result) => {
-            console.log(result);
-            res.status(201).json(result);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => {
-        res.json({ error: { message: err.message } });
-      });
-  }
-
-  async updateUser(req, res) {
+  updateUser(req, res) {
     const { id, username, email, password, role } = req.body;
 
     User.update({ username, email, password, role }, { where: { id: id } })
@@ -61,7 +42,7 @@ class UserController {
       });
   }
 
-  async deleteUser(req, res) {
+  deleteUser(req, res) {
     const id = req.params.id;
     User.destroy({ where: { id: id } })
       .then((result) => {
