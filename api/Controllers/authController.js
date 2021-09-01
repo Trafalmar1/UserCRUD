@@ -1,9 +1,16 @@
 const User = require("../Models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator/check");
 
 class AuthController {
   signUp(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(422)
+        .json({ message: "Validation failed", errors: errors.array() });
+    }
     const { username, password, email, role } = req.body;
     User.findOne({ where: { email: email } })
       .then((result) => {
