@@ -16,8 +16,7 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-    console.log(users);
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

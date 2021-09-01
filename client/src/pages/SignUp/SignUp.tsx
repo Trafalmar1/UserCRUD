@@ -1,6 +1,7 @@
+import api from "api";
 import { Input } from "components";
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AuthButton, AuthTitle, Checkbox } from "UI";
 
 import classes from "./styles.module.scss";
@@ -9,18 +10,19 @@ type SignUpFormData = {
   username: string;
   email: string;
   password: string;
-  isAdmin: string;
+  role: string;
 };
 
 const initialData: SignUpFormData = {
   username: "",
   email: "",
   password: "",
-  isAdmin: "",
+  role: "user",
 };
 
 const SignUp = () => {
   const [form, setForm] = useState<SignUpFormData>(initialData);
+  const history = useHistory();
 
   const formChangeHandler = (name: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -28,6 +30,15 @@ const SignUp = () => {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    api
+      .signUp(form)
+      .then((res) => {
+        console.log("Account was created", res);
+        history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -55,8 +66,10 @@ const SignUp = () => {
         />
         <Checkbox
           label="is admin"
-          value={form.isAdmin === "is admin"}
-          name="isAdmin"
+          checkedValue="admin"
+          defaultValue="user"
+          value={form.role === "admin"}
+          name="role"
           onChange={formChangeHandler}
         />
         <Link to="login">Sign in</Link>

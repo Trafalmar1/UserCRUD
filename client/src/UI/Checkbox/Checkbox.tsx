@@ -6,14 +6,23 @@ type CheckboxProps = {
   label: string;
   name: string;
   value: boolean;
+  checkedValue: string;
+  defaultValue: string;
   onChange: (name: string, v: string) => void;
 };
 
-const Checkbox: FC<CheckboxProps> = ({ label, name, value, onChange }) => {
+const Checkbox: FC<CheckboxProps> = ({
+  label,
+  name,
+  value,
+  checkedValue,
+  defaultValue,
+  onChange,
+}) => {
   const [checked, setChecked] = useState(value);
 
   const toggleHandler = () => {
-    onChange(name, !checked ? label : "");
+    onChange(name, !checked ? checkedValue : defaultValue);
     setChecked(!checked);
   };
 
