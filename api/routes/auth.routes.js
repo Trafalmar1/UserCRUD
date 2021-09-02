@@ -5,8 +5,7 @@ const { body } = require("express-validator/check");
 
 router.post(
   "/login",
-  body("email").trim().isEmail(),
-  body("password").trim().notEmpty(),
+  [body("email").trim().isEmail(), body("password").trim().notEmpty()],
   authController.signIn
 );
 router.post(

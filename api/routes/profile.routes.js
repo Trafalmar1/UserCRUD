@@ -10,11 +10,10 @@ router.post(
   "/profile",
   isAuth,
   [
-    body("date").trim().isDate().notEmpty(),
+    body("birthday").trim().isISO8601().notEmpty(),
     body("gender").trim().notEmpty().isIn(["male", "female"]),
     body("name").trim().notEmpty(),
     body("city").trim().notEmpty(),
-    body("userId").trim().notEmpty(),
   ],
   profileController.createProfile
 );
@@ -22,11 +21,10 @@ router.put(
   "/profile",
   isAuth,
   [
-    body("date").trim().isDate().notEmpty(),
+    body("birthday").trim().isISO8601().notEmpty(),
     body("gender").trim().notEmpty().isIn(["male", "female"]),
     body("name").trim().notEmpty(),
     body("city").trim().notEmpty(),
-    body("userId").trim().notEmpty(),
   ],
   profileController.updateProfile
 );

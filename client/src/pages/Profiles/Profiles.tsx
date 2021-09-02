@@ -1,36 +1,24 @@
 import { ProfileCard, ProfileModal, UserDetails } from "components";
 import AddNewProfile from "components/ProfileCard/AddNewProfile/AddNewProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfiles } from "redux/actions/profileActions";
+import { ProfileReducer } from "redux/reducers/profileReducer";
+import { RootState } from "redux/store";
 import { Title } from "UI";
 
 import classes from "./styles.module.scss";
 
-const dummyData = [
-  {
-    id: "1",
-    username: "Trafalmar",
-    gender: "male",
-    birthday: "08.09.1999",
-    city: "Khmelnytskyi",
-  },
-  {
-    id: "2",
-    username: "Trafalmar",
-    gender: "male",
-    birthday: "08.09.1999",
-    city: "Khmelnytskyi",
-  },
-  {
-    id: "3",
-    username: "Trafalmar",
-    gender: "male",
-    birthday: "08.09.1999",
-    city: "Khmelnytskyi",
-  },
-];
-
 const Profiles = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { profiles } = useSelector(
+    (state: RootState) => state.profiles as ProfileReducer
+  );
+
+  useEffect(() => {
+    dispatch(getProfiles());
+  }, [dispatch]);
 
   const toggleModal = () => {
     setModalVisible((prev) => !prev);
@@ -43,9 +31,10 @@ const Profiles = () => {
       </div>
       <Title>Profiles:</Title>
       <div className={classes.ProfilesContainer}>
-        {dummyData.map((profile) => (
-          <ProfileCard key={profile.id} {...profile} />
-        ))}
+        {Array.isArray(profiles) &&
+          profiles?.map((profile) => (
+            <ProfileCard key={profile?.id} profile={profile} />
+          ))}
         <AddNewProfile onClick={toggleModal} />
       </div>
       <ProfileModal visible={modalVisible} toggle={toggleModal} />

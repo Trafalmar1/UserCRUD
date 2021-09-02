@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator/check");
 const Profile = require("../Models/Profile");
 const User = require("../Models/User");
 
@@ -34,8 +35,14 @@ class ProfileController {
   }
 
   createProfile(req, res, next) {
-    const { name, city, birthday, gender, userId } = req.body;
-    User.findOne({ where: { id: userId } })
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(422)
+        .json({ message: "Validation failed", errors: errors.array() });
+    }
+    const { name, city, birthday, gender } = req.body;
+    User.findOne({ where: { id: req.userId } })
       .then((user) => {
         if (!user) {
           const error = new Error("User does not exist");
@@ -53,6 +60,12 @@ class ProfileController {
   }
 
   updateProfile(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(422)
+        .json({ message: "Validation failed", errors: errors.array() });
+    }
     const { name, city, birthday, gender, id } = req.body;
     Profile.findOne({ where: { id: id } })
       .then((profile) => {

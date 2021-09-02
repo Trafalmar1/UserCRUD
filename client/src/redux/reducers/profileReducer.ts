@@ -1,27 +1,33 @@
-type Profile = {
+import { GET_PROFILES } from "redux/actions/profileActions";
+
+export type Profile = {
+  id: string;
   name: string;
   city: string;
   birthday: Date;
+  userId: string;
   gender: "male" | "female";
 };
 
-type State = {
+export type ProfileReducer = {
   profiles: Profile[];
 };
 
-type Action = {
+export type Action = {
   type: string;
   payload: {
     profiles?: Profile[];
   };
 };
 
-const initialState: State = {
+const initialState: ProfileReducer = {
   profiles: [],
 };
 
 export const profileReducer = (state = initialState, action: Action) => {
   switch (action.type) {
+    case GET_PROFILES:
+      return { ...state, profiles: action.payload.profiles };
     default:
       return state;
   }

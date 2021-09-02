@@ -1,11 +1,14 @@
 import { GET_USERS, GET_ONE_USER } from "redux/actions/userActions";
 import { LOGIN, LOGOUT } from "redux/actions/authActions";
 
+type Profile = { id: string };
+
 export type User = {
   id: string;
   username: string;
   email: string;
   role: string;
+  profiles: Profile[];
 };
 
 export type UserReducer = {

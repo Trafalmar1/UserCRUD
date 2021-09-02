@@ -1,8 +1,17 @@
 const User = require("../Models/User");
+const Profile = require("../Models/Profile");
 
 class UserController {
   getUsers(req, res, next) {
-    User.findAll({ attributes: ["id", "username", "email", "role"] })
+    User.findAll({
+      attributes: ["id", "username", "email", "role"],
+      include: [
+        {
+          model: Profile,
+          attributes: ["id"],
+        },
+      ],
+    })
       .then((result) => {
         res.json(result);
       })

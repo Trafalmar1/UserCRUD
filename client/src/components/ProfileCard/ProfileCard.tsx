@@ -1,26 +1,32 @@
 import { FC } from "react";
 import { ReactSVG } from "react-svg";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import pencil from "assets/svg/pencil.svg";
 import trash from "assets/svg/delete.svg";
-
-import classes from "./styles.module.scss";
 import Card from "components/Card/Card";
 
+import { Profile } from "redux/reducers/profileReducer";
+import { RootState } from "redux/store";
+import { UserReducer } from "redux/reducers/userReducer";
+
+import classes from "./styles.module.scss";
+import { deleteProfile } from "redux/actions/profileActions";
+
 type ProfileCardProps = {
-  id: string;
-  username: string;
-  gender: string;
-  birthday: string;
-  city: string;
+  profile: Profile;
 };
 
-const ProfileCard: FC<ProfileCardProps> = ({
-  username,
-  gender,
-  birthday,
-  city,
-}) => {
+const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
+  const { id, name, birthday, city, gender, userId } = profile;
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user as UserReducer);
+
+  const deleteProfileHandler = () => {
+    dispatch(deleteProfile(id));
+  };
+
   const renderControls = () => {
     return (
       <div className={classes.CardControls}>
@@ -28,7 +34,7 @@ const ProfileCard: FC<ProfileCardProps> = ({
           <p>edit</p>
           <ReactSVG src={pencil} />
         </button>
-        <button>
+        <button onClick={deleteProfileHandler}>
           <p>delete</p>
           <ReactSVG src={trash} />
         </button>
@@ -37,10 +43,14 @@ const ProfileCard: FC<ProfileCardProps> = ({
   };
 
   return (
-    <Card controls={renderControls()}>
-      <p>{username}</p>
+    <Card
+      controls={
+        (user?.id === userId || user?.role === "admin") && renderControls()
+      }
+    >
+      <p>{name}</p>
       <p>{gender}</p>
-      <p>{birthday}</p>
+      <p>{moment(birthday).format("DD.MM.YYYY")}</p>
       <p>{city}</p>
     </Card>
   );

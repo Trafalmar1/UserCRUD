@@ -1,18 +1,14 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { Dashboard, Home, Login, Profiles, SignUp, Users } from "pages";
-import { RootState } from "redux/store";
 import useFullscreen from "hooks/useFullscreen";
 
 import classes from "./styles.module.scss";
-import { UserReducer } from "redux/reducers/userReducer";
 
 const Content = () => {
   const { isFullscreen } = useFullscreen();
-  const user: UserReducer = useSelector((state: RootState) => state.user);
 
-  if (!user?.loggedIn) {
+  if (!localStorage.getItem("token")) {
     return (
       <section
         className={[classes.Container, isFullscreen && classes.Fullscreen].join(

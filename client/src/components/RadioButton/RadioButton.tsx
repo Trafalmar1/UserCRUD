@@ -7,7 +7,7 @@ type Props = {
   label: string;
   value: string;
   checked?: boolean;
-  onChange: (name: string, v: string) => void;
+  onChange: (name: any, v: string) => void;
 };
 
 const RadioButton: FC<Props> = ({ name, value, label, checked, onChange }) => {

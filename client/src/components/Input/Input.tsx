@@ -6,6 +6,7 @@ type InputProps = {
   name?: string;
   label?: string;
   value?: string;
+  placeholder?: string;
   touched?: boolean;
   valid?: boolean;
   type?: "text" | "password";
@@ -20,6 +21,7 @@ const Input: FC<InputProps> = ({
   type = "text",
   touched,
   valid = true,
+  placeholder,
   onChange,
   onBlur,
 }) => {
@@ -42,6 +44,7 @@ const Input: FC<InputProps> = ({
         className={[touched && classes.Touched, !valid && classes.Invalid].join(
           " "
         )}
+        placeholder={placeholder}
         type={type}
         value={value}
         id={name}

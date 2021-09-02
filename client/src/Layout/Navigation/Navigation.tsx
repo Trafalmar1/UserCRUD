@@ -27,7 +27,7 @@ const Navigation = () => {
     if (loggedIn && userId) {
       dispatch(getOneUser(userId.toString()));
     }
-  }, [loggedIn]);
+  }, [loggedIn, dispatch, userId]);
 
   if (isFullscreen || !loggedIn) return null;
   return (
