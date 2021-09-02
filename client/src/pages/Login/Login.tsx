@@ -1,34 +1,13 @@
 import { Input } from "components";
-import { FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { signIn } from "redux/actions/authActions";
 import { AuthButton, AuthTitle } from "UI";
 
 import classes from "./styles.module.scss";
-
-type LoginFormData = {
-  email: string;
-  password: string;
-};
-
-const initialData: LoginFormData = {
-  email: "",
-  password: "",
-};
+import useSignIn from "./useSignIn";
 
 const Login = () => {
-  const [form, setForm] = useState<LoginFormData>(initialData);
-  const dispatch = useDispatch();
-
-  const formChangeHandler = (name: string, value: string) => {
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    dispatch(signIn({ ...form }));
-  };
+  const { formChangeHandler, inputBlurHandler, submitHandler, form } =
+    useSignIn();
 
   return (
     <div className={classes.Center}>
@@ -36,15 +15,21 @@ const Login = () => {
       <form onSubmit={submitHandler} className={classes.Form}>
         <Input
           label="Email"
-          value={form.email}
+          value={form.email.value}
+          valid={form.email.valid}
+          touched={form.email.touched}
           name="email"
+          onBlur={inputBlurHandler}
           onChange={formChangeHandler}
         />
         <Input
           label="Password"
           type="password"
-          value={form.password}
+          value={form.password.value}
+          valid={form.password.valid}
+          touched={form.password.touched}
           name="password"
+          onBlur={inputBlurHandler}
           onChange={formChangeHandler}
         />
         <Link to="sign-up">Create new account</Link>

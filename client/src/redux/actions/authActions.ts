@@ -30,23 +30,29 @@ const autoLogout = (ms: number) => (dispatch: AppDispatch) => {
   }, ms);
 };
 
-export const signIn = (data: LoginData) => async (dispatch: AppDispatch) => {
-  const res: SignInData = await api.signIn(data);
-  if (!res || !res.token || !res.userId) return;
-  localStorage.setItem("token", res.token);
-  localStorage.setItem("userId", res.userId);
-  const remainingMilliseconds = 60 * 60 * 1000 * 24 * 10;
-  const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
-  localStorage.setItem("expiryDate", expiryDate.toISOString());
-  dispatch(autoLogout(remainingMilliseconds));
-  dispatch({
-    type: actions.LOGIN,
-    payload: {
-      loggedIn: true,
-      token: res.token,
-    },
-  });
-};
+export const signIn =
+  (data: LoginData, callBack?: (res: string) => void) =>
+  async (dispatch: AppDispatch) => {
+    const res: SignInData = await api.signIn(data);
+    if (!res || !res.token || !res.userId) {
+      if (callBack) callBack("error");
+      return;
+    }
+    if (callBack) callBack("success");
+    localStorage.setItem("token", res.token);
+    localStorage.setItem("userId", res.userId);
+    const remainingMilliseconds = 60 * 60 * 1000 * 24 * 10;
+    const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
+    localStorage.setItem("expiryDate", expiryDate.toISOString());
+    dispatch(autoLogout(remainingMilliseconds));
+    dispatch({
+      type: actions.LOGIN,
+      payload: {
+        loggedIn: true,
+        token: res.token,
+      },
+    });
+  };
 
 export const logout = () => (dispatch: AppDispatch) => {
   removeLocalStorage();

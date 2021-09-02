@@ -1,10 +1,10 @@
 import { FormEvent, useState } from "react";
 import _ from "lodash";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
 
-import api from "api";
 import { email, notEmpty } from "utils/validators";
+import { useDispatch } from "react-redux";
+import { signIn } from "redux/actions/authActions";
 
 type Value = {
   value: string;
@@ -14,14 +14,11 @@ type Value = {
 };
 
 type SignUpFormData = {
-  username: Value;
   email: Value;
   password: Value;
-  role: Value;
 };
 
 const initialData: SignUpFormData = {
-  username: { value: "", validators: [notEmpty], valid: true, touched: false },
   email: {
     value: "",
     validators: [email, notEmpty],
@@ -29,12 +26,12 @@ const initialData: SignUpFormData = {
     touched: false,
   },
   password: { value: "", validators: [notEmpty], valid: true, touched: false },
-  role: { value: "user", validators: [], valid: true, touched: false },
 };
 
-const useSignUp = () => {
+const useSignIn = () => {
   const [form, setForm] = useState<SignUpFormData>(initialData);
-  const history = useHistory();
+  const dispatch = useDispatch();
+
   const errorToast = (text: string) => {
     toast.error(text, {
       position: "bottom-right",
@@ -102,20 +99,19 @@ const useSignUp = () => {
     }
 
     const data = {
-      username: form.username.value,
       email: form.email.value,
       password: form.password.value,
-      role: form.role.value,
     };
-    api
-      .signUp(data)
-      .then((res) => {
-        successToast("Account was created");
-        history.push("/login");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    const loginCallBack = (res: string) => {
+      if (res === "success") {
+        successToast(`Logged in as ${data.email}`);
+      } else {
+        errorToast("Email or password is incorrect");
+      }
+    };
+
+    dispatch(signIn({ ...data }, loginCallBack));
   };
 
   const inputBlurHandler = (name: keyof SignUpFormData) => {
@@ -133,4 +129,4 @@ const useSignUp = () => {
   return { inputBlurHandler, submitHandler, formChangeHandler, form };
 };
 
-export default useSignUp;
+export default useSignIn;
