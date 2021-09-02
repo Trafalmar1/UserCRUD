@@ -51,7 +51,9 @@ class AuthController {
               process.env.SECRET,
               { expiresIn: "30 days" }
             );
-            res.status(200).json({ token: token, userId: user.id });
+            res
+              .status(200)
+              .json({ token: token, userId: user.id, role: user.role });
           })
           .catch((err) => {
             next(err);

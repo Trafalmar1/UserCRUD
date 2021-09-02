@@ -39,7 +39,7 @@ const Profiles = () => {
   return (
     <>
       <div className={classes.UserDetailsContainer}>
-        <UserDetails id="1" />
+        <UserDetails />
       </div>
       <Title>Profiles:</Title>
       <div className={classes.ProfilesContainer}>

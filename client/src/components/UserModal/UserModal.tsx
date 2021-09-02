@@ -12,7 +12,7 @@ import { User } from "redux/reducers/userReducer";
 
 type ProfileModalProps = {
   visible?: boolean;
-  user?: User;
+  user?: User | null;
   toggle?: VoidFunction;
 };
 
@@ -41,7 +41,11 @@ const UserModal: FC<ProfileModalProps> = ({ visible, user, toggle }) => {
 
   useEffect(() => {
     if (!user) return;
-    setForm(user);
+    setForm({
+      username: user?.username,
+      email: user?.email,
+      role: user?.role,
+    });
   }, [user]);
 
   return (

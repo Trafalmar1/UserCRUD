@@ -5,3 +5,9 @@ export const getUsers = () => {
     return res;
   });
 };
+
+export const getOneUser = (id: string) => {
+  return Axios.get(`/user/${id}`).then((res) => {
+    return res;
+  });
+};

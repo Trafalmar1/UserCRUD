@@ -14,6 +14,7 @@ export type LoginData = {
 export type SignInData = {
   token?: string;
   userId?: string;
+  role?: string;
 };
 
 export const signUp = (data: SignUpData) => {

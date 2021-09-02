@@ -1,17 +1,31 @@
-import { AppDispatch } from "redux/store";
 import api from "api";
+import { AppDispatch } from "redux/store";
 
-export const actions = {
-  GET_USERS: "GET_USERS",
-  LOADING: "LOADING",
-};
+export const GET_USERS = "GET_USERS";
+export const LOADING = "LOADING";
+export const GET_ONE_USER = "GET_ONE_USER";
 
 export const getUsers = () => async (dispatch: AppDispatch) => {
-  dispatch({ type: actions.LOADING, payload: { loading: true } });
-  const res = await api.getUsers();
+  dispatch({ type: LOADING, payload: { loading: true } });
+  try {
+    const res = await api.getUsers();
+    dispatch({
+      type: GET_USERS,
+      payload: { users: res.data, loading: false },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  dispatch({
-    type: actions.GET_USERS,
-    payload: { users: res.data, loading: false },
-  });
+export const getOneUser = (id: string) => async (dispatch: AppDispatch) => {
+  try {
+    const res = await api.getOneUser(id);
+    dispatch({
+      type: GET_ONE_USER,
+      payload: { user: res.data },
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };

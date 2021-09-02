@@ -6,21 +6,15 @@ import trash from "assets/svg/delete.svg";
 
 import classes from "./styles.module.scss";
 import UserModal from "components/UserModal/UserModal";
-import { User } from "redux/reducers/userReducer";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
+import { UserReducer } from "redux/reducers/userReducer";
 
-type UserDetailsProps = {
-  id?: string;
-};
+type UserDetailsProps = {};
 
-const dummyUser: User = {
-  id: "1",
-  username: "TrafalMar",
-  email: "vladiksav2@gmail.com",
-  role: "user",
-};
-
-const UserDetails: FC<UserDetailsProps> = ({ id }) => {
+const UserDetails: FC<UserDetailsProps> = () => {
   const [userModalVisible, setUserModalVisible] = useState(false);
+  const { user } = useSelector((state: RootState) => state.user as UserReducer);
 
   const toggleUserModal = () => {
     setUserModalVisible((prev) => !prev);
@@ -28,9 +22,9 @@ const UserDetails: FC<UserDetailsProps> = ({ id }) => {
   return (
     <>
       <div className={classes.Container}>
-        <h1>{dummyUser.username}</h1>
-        <h1>{dummyUser.email}</h1>
-        <h3>{dummyUser.email}</h3>
+        <h1>{user?.username}</h1>
+        <h1>{user?.email}</h1>
+        <h3>{user?.role}</h3>
         <div className={classes.Controls}>
           <button onClick={toggleUserModal}>
             <ReactSVG src={pencil} />
@@ -43,7 +37,7 @@ const UserDetails: FC<UserDetailsProps> = ({ id }) => {
       <UserModal
         visible={userModalVisible}
         toggle={toggleUserModal}
-        user={dummyUser}
+        user={user}
       />
     </>
   );

@@ -1,18 +1,19 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Title } from "UI";
 import { UserCard } from "components";
-import { useAppDispatch } from "hooks/hooks";
 import { RootState } from "redux/store";
-import { User } from "redux/reducers/userReducer";
+import { User, UserReducer } from "redux/reducers/userReducer";
 import { getUsers } from "redux/actions/userActions";
 
 import classes from "./styles.module.scss";
 
 const Users = () => {
-  const dispatch = useAppDispatch();
-  const { users } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+  const { users } = useSelector(
+    (state: RootState) => state.user as UserReducer
+  );
 
   useEffect(() => {
     dispatch(getUsers());

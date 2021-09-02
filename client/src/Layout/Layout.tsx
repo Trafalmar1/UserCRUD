@@ -2,6 +2,7 @@ import useAuth from "hooks/useAuth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
+
 import { login } from "redux/actions/authActions";
 import { RootState } from "redux/store";
 import Content from "./Content/Content";
@@ -15,8 +16,9 @@ const Layout = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
     const expiryDate = localStorage.getItem("expiryDate");
-    if (!token || !expiryDate) {
+    if (!token || !expiryDate || !userId) {
       return;
     }
     if (new Date(expiryDate) <= new Date()) {
@@ -26,7 +28,7 @@ const Layout = () => {
     const remainingMilliseconds =
       new Date(expiryDate).getTime() - new Date().getTime();
     if (!remainingMilliseconds) return;
-    dispatch(login({ token: token }));
+    dispatch(login({ token, userId }));
     setAutoLogout(remainingMilliseconds);
   }, [dispatch, logoutHandler, setAutoLogout]);
 

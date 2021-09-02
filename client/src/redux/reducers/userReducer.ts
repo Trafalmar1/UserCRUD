@@ -1,5 +1,5 @@
-import { actions } from "redux/actions/userActions";
-import { actions as authActions } from "redux/actions/authActions";
+import { GET_USERS, GET_ONE_USER } from "redux/actions/userActions";
+import { LOGIN, LOGOUT } from "redux/actions/authActions";
 
 export type User = {
   id: string;
@@ -11,27 +11,52 @@ export type User = {
 export type UserReducer = {
   loggedIn: boolean;
   token: string;
-  user: User;
+  user: User | null;
   users: User[];
   loading: boolean;
+  userId: string;
+};
+
+export type Action = {
+  type: string;
+  payload: {
+    loggedIn?: boolean;
+    token?: string;
+    user?: User | null;
+    users?: User[];
+    loading?: boolean;
+    userId?: string;
+  };
 };
 
 const initialState: UserReducer = {
   loggedIn: false,
   token: "",
-  user: { id: "", username: "", email: "", role: "" },
+  user: null,
   users: [],
   loading: false,
+  userId: "",
 };
 
-export const userReducer = (state = initialState, action: any) => {
+export const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
-    case actions.GET_USERS:
-      return { ...state, ...action.payload };
-    case authActions.LOGIN:
-      return { ...state, ...action.payload };
-    case authActions.LOGOUT:
-      return { ...state, ...action.payload };
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload.users,
+        loading: action.payload.loading,
+      };
+    case GET_ONE_USER:
+      return { ...state, user: action.payload.user };
+    case LOGIN:
+      return {
+        ...state,
+        loggedIn: action.payload.loggedIn,
+        token: action.payload.token,
+        userId: action.payload.userId,
+      };
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }
