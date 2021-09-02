@@ -47,7 +47,7 @@ class AuthController {
               throw new Error("Password do not match");
             }
             const token = jwt.sign(
-              { email: email, id: user.id },
+              { email: email, id: user.id, role: user.role },
               process.env.SECRET,
               { expiresIn: "30 days" }
             );
