@@ -6,19 +6,21 @@ import trash from "assets/svg/delete.svg";
 
 import classes from "./styles.module.scss";
 import UserModal from "components/UserModal/UserModal";
-import { useSelector } from "react-redux";
-import { RootState } from "redux/store";
-import { UserReducer } from "redux/reducers/userReducer";
+import { User } from "redux/reducers/userReducer";
 
-type UserDetailsProps = {};
+type UserDetailsProps = {
+  user?: User | null;
+};
 
-const UserDetails: FC<UserDetailsProps> = () => {
+const UserDetails: FC<UserDetailsProps> = ({ user }) => {
   const [userModalVisible, setUserModalVisible] = useState(false);
-  const { user } = useSelector((state: RootState) => state.user as UserReducer);
 
   const toggleUserModal = () => {
     setUserModalVisible((prev) => !prev);
   };
+
+  if (!user) return null;
+
   return (
     <>
       <div className={classes.Container}>

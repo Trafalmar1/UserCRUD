@@ -14,6 +14,7 @@ import { UserReducer } from "redux/reducers/userReducer";
 import classes from "./styles.module.scss";
 import { deleteProfile } from "redux/actions/profileActions";
 import ProfileModal from "components/ProfileModal/ProfileModal";
+import { getProfileOwner } from "redux/actions/userActions";
 
 type ProfileCardProps = {
   profile: Profile;
@@ -23,7 +24,9 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
   const { id, name, birthday, city, gender, userId } = profile;
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.user as UserReducer);
+  const { user, profileOwner } = useSelector(
+    (state: RootState) => state.user as UserReducer
+  );
 
   const deleteProfileHandler = () => {
     dispatch(deleteProfile(id));
@@ -31,6 +34,11 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
 
   const toggleHandler = () => {
     setModalVisible((prev) => !prev);
+  };
+
+  const getProfileOwnerHandler = () => {
+    if (userId === profileOwner?.id) return;
+    dispatch(getProfileOwner(userId));
   };
 
   const renderControls = () => {
@@ -56,11 +64,14 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
     );
   };
 
+  const isOwnerOrAdmin = () => {
+    return user?.id === userId || user?.role === "admin";
+  };
+
   return (
     <Card
-      controls={
-        (user?.id === userId || user?.role === "admin") && renderControls()
-      }
+      controls={isOwnerOrAdmin() && renderControls()}
+      onClick={isOwnerOrAdmin() ? getProfileOwnerHandler : null}
     >
       <p>{name}</p>
       <p>{gender}</p>

@@ -1,4 +1,8 @@
-import { GET_USERS, GET_ONE_USER } from "redux/actions/userActions";
+import {
+  GET_USERS,
+  GET_ONE_USER,
+  GET_PROFILE_OWNER,
+} from "redux/actions/userActions";
 import { LOGIN, LOGOUT } from "redux/actions/authActions";
 
 type Profile = { id: string };
@@ -18,6 +22,7 @@ export type UserReducer = {
   users: User[];
   loading: boolean;
   userId: string;
+  profileOwner: User | null;
 };
 
 export type Action = {
@@ -29,6 +34,7 @@ export type Action = {
     users?: User[];
     loading?: boolean;
     userId?: string;
+    profileOwner?: User | null;
   };
 };
 
@@ -39,6 +45,7 @@ const initialState: UserReducer = {
   users: [],
   loading: false,
   userId: "",
+  profileOwner: null,
 };
 
 export const userReducer = (state = initialState, action: Action) => {
@@ -51,6 +58,8 @@ export const userReducer = (state = initialState, action: Action) => {
       };
     case GET_ONE_USER:
       return { ...state, user: action.payload.user };
+    case GET_PROFILE_OWNER:
+      return { ...state, profileOwner: action.payload.profileOwner };
     case LOGIN:
       return {
         ...state,
