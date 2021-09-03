@@ -1,4 +1,4 @@
-import { getUsers, getOneUser, updateUser } from "./userApi";
+import { getUsers, getOneUser, updateUser, deleteUser } from "./userApi";
 import { signUp, signIn } from "./authApi";
 import {
   getProfiles,
@@ -10,6 +10,7 @@ import {
 const api = {
   getUsers,
   updateUser,
+  deleteUser,
   signUp,
   signIn,
   getOneUser,

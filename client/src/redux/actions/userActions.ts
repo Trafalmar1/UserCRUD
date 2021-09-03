@@ -1,25 +1,32 @@
 import api from "api";
 import { UserData } from "api/userApi";
+import { Action } from "redux/reducers/userReducer";
 import { AppDispatch } from "redux/store";
 
 export const GET_USERS = "GET_USERS";
 export const LOADING = "LOADING";
 export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_PROFILE_OWNER = "GET_PROFILE_OWNER";
+export const DELETE_USER = "DELETE_USER";
 
-const getUsersAction = (res: any) => ({
+const getUsersAction = (res: any): Action => ({
   type: GET_USERS,
   payload: { users: res.data, loading: false },
 });
 
-const getProfileOwnerAction = (res: any) => ({
+const getProfileOwnerAction = (res: any): Action => ({
   type: GET_PROFILE_OWNER,
   payload: { profileOwner: res.data },
 });
 
-const getLoggedInUserAction = (res: any) => ({
+const getLoggedInUserAction = (res: any): Action => ({
   type: GET_ONE_USER,
   payload: { user: res.data },
+});
+
+const deleteUserAction = (): Action => ({
+  type: DELETE_USER,
+  payload: { profileOwner: null },
 });
 
 export const getUsers = () => async (dispatch: AppDispatch) => {
@@ -77,3 +84,12 @@ export const updateUser =
       console.error(err);
     }
   };
+
+export const deleteUser = (id: string) => async (dispatch: AppDispatch) => {
+  try {
+    await api.deleteUser(id);
+    dispatch(deleteUserAction());
+  } catch (err) {
+    console.error(err);
+  }
+};

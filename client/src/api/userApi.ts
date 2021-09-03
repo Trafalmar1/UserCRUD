@@ -25,3 +25,9 @@ export const updateUser = (data: UserData) => {
     return res;
   });
 };
+
+export const deleteUser = (id: string) => {
+  return Axios.delete(`/user/${id}`).then((res) => {
+    return res;
+  });
+};

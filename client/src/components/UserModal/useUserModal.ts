@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { email, notEmpty } from "utils/validators";
 import { useDispatch, useSelector } from "react-redux";
 import { UserData } from "api/userApi";
-import { getOneUser, updateUser } from "redux/actions/userActions";
+import { updateUser } from "redux/actions/userActions";
 import { RootState } from "redux/store";
 import { UserReducer } from "redux/reducers/userReducer";
 

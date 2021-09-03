@@ -1,12 +1,17 @@
 import { FC, useState } from "react";
 import { ReactSVG } from "react-svg";
+import { useDispatch, useSelector } from "react-redux";
 
 import pencil from "assets/svg/pencil.svg";
 import trash from "assets/svg/delete.svg";
+import { User, UserReducer } from "redux/reducers/userReducer";
+import { RootState } from "redux/store";
+import UserModal from "components/UserModal/UserModal";
+import { logout } from "redux/actions/authActions";
 
 import classes from "./styles.module.scss";
-import UserModal from "components/UserModal/UserModal";
-import { User } from "redux/reducers/userReducer";
+import { getProfiles } from "redux/actions/profileActions";
+import { deleteUser } from "redux/actions/userActions";
 
 type UserDetailsProps = {
   user: User | null;
@@ -14,9 +19,30 @@ type UserDetailsProps = {
 
 const UserDetails: FC<UserDetailsProps> = ({ user }) => {
   const [userModalVisible, setUserModalVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { user: loggedInUser } = useSelector(
+    (state: RootState) => state.user as UserReducer
+  );
 
   const toggleUserModal = () => {
     setUserModalVisible((prev) => !prev);
+  };
+
+  const deleteUserHandler = async () => {
+    if (!window.confirm(`Do you really want to delete ${user?.email} account?`))
+      return;
+    const username = window.prompt(`Enter "${user?.username}" to confirm`);
+    if (username?.trim() === user?.username) {
+      if (!user?.id) return;
+      await dispatch(deleteUser(user.id));
+      if (loggedInUser?.id === user.id) {
+        dispatch(logout());
+        return;
+      }
+      dispatch(getProfiles());
+    } else {
+      alert("Fail to delete");
+    }
   };
 
   if (!user) return null;
@@ -31,7 +57,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user }) => {
           <button onClick={toggleUserModal}>
             <ReactSVG src={pencil} />
           </button>
-          <button>
+          <button onClick={deleteUserHandler}>
             <ReactSVG src={trash} />
           </button>
         </div>

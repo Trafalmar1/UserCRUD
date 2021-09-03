@@ -2,6 +2,7 @@ import {
   GET_USERS,
   GET_ONE_USER,
   GET_PROFILE_OWNER,
+  DELETE_USER,
 } from "redux/actions/userActions";
 import { LOGIN, LOGOUT } from "redux/actions/authActions";
 
@@ -59,6 +60,8 @@ export const userReducer = (state = initialState, action: Action) => {
     case GET_ONE_USER:
       return { ...state, user: action.payload.user };
     case GET_PROFILE_OWNER:
+      return { ...state, profileOwner: action.payload.profileOwner };
+    case DELETE_USER:
       return { ...state, profileOwner: action.payload.profileOwner };
     case LOGIN:
       return {
