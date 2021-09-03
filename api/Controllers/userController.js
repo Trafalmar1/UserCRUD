@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator/check");
 const User = require("../Models/User");
 const Profile = require("../Models/Profile");
 
@@ -36,14 +37,28 @@ class UserController {
   }
 
   updateUser(req, res, next) {
-    const { id, username, email, password, role } = req.body;
-
-    User.update({ username, email, password, role }, { where: { id: id } })
-      .then((result) => {
-        if (!result) {
-          throw new Error("User not found");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(422)
+        .json({ message: "Validation failed", errors: errors.array() });
+    }
+    const { id, email } = req.body;
+    User.findOne({ where: { email: email } })
+      .then((user) => {
+        if (user && user.id !== id) {
+          throw new Error(`User with ${email} email already exists`);
         }
-        res.status(200).json("User successfully updated");
+        User.update({ ...req.body }, { where: { id: id } })
+          .then((result) => {
+            if (!result) {
+              throw new Error("User not found");
+            }
+            res.status(200).json("User successfully updated");
+          })
+          .catch((err) => {
+            next(err);
+          });
       })
       .catch((err) => {
         next(err);

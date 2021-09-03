@@ -11,8 +11,9 @@ router.post(
 router.post(
   "/sign-up",
   [
+    body("username").trim().notEmpty(),
     body("email").trim().isEmail(),
-    body("password").notEmpty(),
+    body("password").trim().notEmpty(),
     body("role").notEmpty().isIn(["admin", "user"]),
   ],
   authController.signUp

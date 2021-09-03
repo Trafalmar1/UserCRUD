@@ -9,7 +9,7 @@ import UserModal from "components/UserModal/UserModal";
 import { User } from "redux/reducers/userReducer";
 
 type UserDetailsProps = {
-  user?: User | null;
+  user: User | null;
 };
 
 const UserDetails: FC<UserDetailsProps> = ({ user }) => {
@@ -38,8 +38,8 @@ const UserDetails: FC<UserDetailsProps> = ({ user }) => {
       </div>
       <UserModal
         visible={userModalVisible}
-        toggle={toggleUserModal}
         user={user}
+        toggle={toggleUserModal}
       />
     </>
   );
