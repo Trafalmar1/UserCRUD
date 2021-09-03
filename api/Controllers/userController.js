@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator/check");
+const { Op } = require("sequelize");
 const User = require("../Models/User");
 const Profile = require("../Models/Profile");
 
@@ -77,6 +78,28 @@ class UserController {
       .catch((err) => {
         next(err);
       });
+  }
+
+  async dashboard(req, res, next) {
+    let response = {};
+    try {
+      const userCount = await User.count();
+      const profileCount = await Profile.count();
+      const eighteenYearsBack = new Date(
+        new Date().setFullYear(new Date().getFullYear() - 18)
+      );
+      const olderThan18 = await Profile.count({
+        where: {
+          birthday: {
+            [Op.lt]: eighteenYearsBack,
+          },
+        },
+      });
+      response = { userCount, profileCount, olderThan18 };
+      res.json(response);
+    } catch (err) {
+      next(err);
+    }
   }
 }
 
