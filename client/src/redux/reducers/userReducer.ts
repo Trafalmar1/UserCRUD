@@ -3,6 +3,7 @@ import {
   GET_ONE_USER,
   GET_PROFILE_OWNER,
   DELETE_USER,
+  GET_DASHBOARD,
 } from "redux/actions/userActions";
 import { LOGIN, LOGOUT } from "redux/actions/authActions";
 
@@ -16,6 +17,12 @@ export type User = {
   profiles: Profile[];
 };
 
+export type Dashboard = {
+  userCount: number;
+  profileCount: number;
+  olderThan18: number;
+};
+
 export type UserReducer = {
   loggedIn: boolean;
   token: string;
@@ -24,6 +31,7 @@ export type UserReducer = {
   loading: boolean;
   userId: string;
   profileOwner: User | null;
+  dashboard: Dashboard | null;
 };
 
 export type Action = {
@@ -36,6 +44,7 @@ export type Action = {
     loading?: boolean;
     userId?: string;
     profileOwner?: User | null;
+    dashboard?: Dashboard | null;
   };
 };
 
@@ -47,6 +56,7 @@ const initialState: UserReducer = {
   loading: false,
   userId: "",
   profileOwner: null,
+  dashboard: null,
 };
 
 export const userReducer = (state = initialState, action: Action) => {
@@ -63,6 +73,8 @@ export const userReducer = (state = initialState, action: Action) => {
       return { ...state, profileOwner: action.payload.profileOwner };
     case DELETE_USER:
       return { ...state, profileOwner: action.payload.profileOwner };
+    case GET_DASHBOARD:
+      return { ...state, dashboard: action.payload.dashboard };
     case LOGIN:
       return {
         ...state,

@@ -31,3 +31,9 @@ export const deleteUser = (id: string) => {
     return res;
   });
 };
+
+export const getDashboard = () => {
+  return Axios.get("/dashboard").then((res) => {
+    return res;
+  });
+};

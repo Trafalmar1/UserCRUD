@@ -5,7 +5,7 @@ import classes from "./styles.module.scss";
 
 type DBItemProps = {
   title: string;
-  number: number;
+  number?: number;
 };
 
 const DashboardItem: FC<DBItemProps> = ({ title, number }) => {
