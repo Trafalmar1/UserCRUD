@@ -5,7 +5,7 @@ import moment from "moment";
 
 import { isDate, notEmpty } from "utils/validators";
 import { useDispatch } from "react-redux";
-import { createProfile } from "redux/actions/profileActions";
+import { createProfile, updateProfile } from "redux/actions/profileActions";
 import { ProfileData } from "api/profileApi";
 
 type Value = {
@@ -15,41 +15,43 @@ type Value = {
   touched: boolean;
 };
 
-type FormData = {
+export type FormData = {
   name: Value;
   gender: Value;
   birthday: Value;
   city: Value;
 };
 
-const initialData: FormData = {
-  name: {
-    value: "",
-    validators: [notEmpty],
-    valid: true,
-    touched: false,
-  },
-  gender: {
-    value: "male",
-    validators: [notEmpty],
-    valid: true,
-    touched: false,
-  },
-  birthday: {
-    value: "",
-    validators: [notEmpty, isDate],
-    valid: true,
-    touched: false,
-  },
-  city: {
-    value: "",
-    validators: [notEmpty],
-    valid: true,
-    touched: false,
-  },
-};
-
-const useProfileModal = () => {
+const useProfileModal = (
+  mode: "creation" | "update" = "creation",
+  profile?: ProfileData
+) => {
+  const initialData: FormData = {
+    name: {
+      value: profile ? profile.name : "",
+      validators: [notEmpty],
+      valid: true,
+      touched: false,
+    },
+    gender: {
+      value: profile ? profile.gender : "male",
+      validators: [notEmpty],
+      valid: true,
+      touched: false,
+    },
+    birthday: {
+      value: profile ? moment(profile.birthday).format("DD.MM.YYYY") : "",
+      validators: [notEmpty, isDate],
+      valid: true,
+      touched: false,
+    },
+    city: {
+      value: profile ? profile.city : "",
+      validators: [notEmpty],
+      valid: true,
+      touched: false,
+    },
+  };
   const [form, setForm] = useState<FormData>(initialData);
   const dispatch = useDispatch();
 
@@ -123,15 +125,26 @@ const useProfileModal = () => {
       city: form.city.value,
     };
 
-    const creationCallBack = (res: string) => {
+    const formCallBack = (res: string) => {
       if (res === "success") {
-        successToast(`Profile ${data.name} was created`);
+        successToast(
+          `Profile ${data.name} was ${
+            mode === "creation" ? "created" : "updated"
+          }`
+        );
         setForm(initialData);
         toggle();
       }
     };
 
-    dispatch(createProfile(data, creationCallBack));
+    switch (mode) {
+      case "update":
+        data.id = profile?.id;
+        dispatch(updateProfile(data, formCallBack));
+        break;
+      default:
+        dispatch(createProfile(data, formCallBack));
+    }
   };
 
   const inputBlurHandler = (name: keyof FormData) => {

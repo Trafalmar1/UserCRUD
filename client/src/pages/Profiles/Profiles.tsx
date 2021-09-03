@@ -24,6 +24,11 @@ const Profiles = () => {
     setModalVisible((prev) => !prev);
   };
 
+  const sortByCreation = (a: any, b: any) => {
+    if (!b?.createdAt || !a?.createdAt) return 0;
+    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+  };
+
   return (
     <>
       <div className={classes.UserDetailsContainer}>
@@ -32,9 +37,11 @@ const Profiles = () => {
       <Title>Profiles:</Title>
       <div className={classes.ProfilesContainer}>
         {Array.isArray(profiles) &&
-          profiles?.map((profile) => (
-            <ProfileCard key={profile?.id} profile={profile} />
-          ))}
+          profiles
+            ?.sort(sortByCreation)
+            ?.map((profile) => (
+              <ProfileCard key={profile?.id} profile={profile} />
+            ))}
         <AddNewProfile onClick={toggleModal} />
       </div>
       <ProfileModal visible={modalVisible} toggle={toggleModal} />

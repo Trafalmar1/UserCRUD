@@ -38,6 +38,22 @@ export const createProfile =
     }
   };
 
+export const updateProfile =
+  (data: ProfileData, callback?: (res: string) => void) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      await api.updateProfile(data);
+      const res = await api.getProfiles();
+      const profiles: Profile[] = res.data as Profile[];
+      if (callback) {
+        callback("success");
+      }
+      dispatch(getProfilesAction(profiles));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 export const deleteProfile = (id: string) => async (dispatch: AppDispatch) => {
   try {
     await api.deleteProfile(id);

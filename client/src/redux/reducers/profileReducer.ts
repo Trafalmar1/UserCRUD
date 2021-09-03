@@ -4,8 +4,9 @@ export type Profile = {
   id: string;
   name: string;
   city: string;
-  birthday: Date;
+  birthday: string;
   userId: string;
+  createdAt?: string;
   gender: "male" | "female";
 };
 

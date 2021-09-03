@@ -5,24 +5,32 @@ import { AuthButton, Label, Modal } from "UI";
 import { Input } from "components";
 import check from "assets/svg/check.svg";
 import cross from "assets/svg/cross.svg";
+import useProfileModal from "./useProfileModal";
+import RadioButton from "components/RadioButton/RadioButton";
 
 import classes from "./styles.module.scss";
-import RadioButton from "components/RadioButton/RadioButton";
-import useProfileModal from "./useProfileModal";
+import { ProfileData } from "api/profileApi";
 
 type ProfileModalProps = {
   visible?: boolean;
+  profile?: ProfileData;
+  mode?: "creation" | "update";
   toggle: VoidFunction;
 };
 
-const ProfileModal: FC<ProfileModalProps> = ({ visible, toggle }) => {
+const ProfileModal: FC<ProfileModalProps> = ({
+  visible,
+  mode,
+  profile,
+  toggle,
+}) => {
   const {
     form,
     inputBlurHandler,
     formChangeHandler,
     submitHandler,
     resetForm,
-  } = useProfileModal();
+  } = useProfileModal(mode, profile);
 
   return (
     <Modal visible={visible} toggle={() => resetForm(toggle)}>

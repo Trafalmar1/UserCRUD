@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { ReactSVG } from "react-svg";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
@@ -13,6 +13,7 @@ import { UserReducer } from "redux/reducers/userReducer";
 
 import classes from "./styles.module.scss";
 import { deleteProfile } from "redux/actions/profileActions";
+import ProfileModal from "components/ProfileModal/ProfileModal";
 
 type ProfileCardProps = {
   profile: Profile;
@@ -20,6 +21,7 @@ type ProfileCardProps = {
 
 const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
   const { id, name, birthday, city, gender, userId } = profile;
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user as UserReducer);
 
@@ -27,18 +29,30 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile }) => {
     dispatch(deleteProfile(id));
   };
 
+  const toggleHandler = () => {
+    setModalVisible((prev) => !prev);
+  };
+
   const renderControls = () => {
     return (
-      <div className={classes.CardControls}>
-        <button>
-          <p>edit</p>
-          <ReactSVG src={pencil} />
-        </button>
-        <button onClick={deleteProfileHandler}>
-          <p>delete</p>
-          <ReactSVG src={trash} />
-        </button>
-      </div>
+      <>
+        <div className={classes.CardControls}>
+          <button onClick={toggleHandler}>
+            <p>edit</p>
+            <ReactSVG src={pencil} />
+          </button>
+          <button onClick={deleteProfileHandler}>
+            <p>delete</p>
+            <ReactSVG src={trash} />
+          </button>
+        </div>
+        <ProfileModal
+          toggle={toggleHandler}
+          visible={modalVisible}
+          mode="update"
+          profile={{ id, name, birthday, city, gender }}
+        />
+      </>
     );
   };
 
