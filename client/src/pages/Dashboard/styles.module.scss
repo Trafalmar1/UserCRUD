@@ -1,6 +1,26 @@
+@import "styles/screenSizes.scss";
+
 .DashboardList {
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;
   flex-grow: 0;
+  @media screen and (max-width: $middle) {
+    justify-content: center;
+    & > section {
+      margin-right: 3rem;
+      margin-bottom: 3rem;
+    }
+  }
+  @media screen and (max-width: $mobile) {
+    & > section {
+      margin-right: 0;
+      padding: 3rem;
+      width: 100%;
+      & h1:first-child {
+        text-align: center;
+        margin-bottom: 0;
+      }
+    }
+  }
 }

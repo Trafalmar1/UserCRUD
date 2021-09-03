@@ -1,5 +1,6 @@
 @import "styles/colors.scss";
 @import "styles/fonts.scss";
+@import "styles/screenSizes.scss";
 
 *,
 *::before,
@@ -13,6 +14,12 @@
 html {
   font-size: 62.5%;
   background-color: $background;
+  @media screen and (max-width: $mobile) {
+    font-size: 50%;
+  }
+  @media screen and (max-width: $middle) {
+    font-size: 55%;
+  }
 }
 
 body {

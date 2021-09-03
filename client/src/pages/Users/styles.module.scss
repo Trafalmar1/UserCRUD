@@ -1,8 +1,20 @@
+@import "styles/screenSizes.scss";
+
 .ListContainer {
   display: flex;
   flex-wrap: wrap;
+  @media screen and (max-width: $middle) {
+    justify-content: space-around;
+  }
   & > section {
     margin-right: 3.2rem;
     margin-bottom: 3.2rem;
+    @media screen and (max-width: $middle) {
+      margin-right: 0;
+      width: min-content;
+    }
+    @media screen and (max-width: $mobile) {
+      width: 100%;
+    }
   }
 }

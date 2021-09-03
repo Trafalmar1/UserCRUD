@@ -1,4 +1,5 @@
 @import "styles/colors.scss";
+@import "styles/screenSizes.scss";
 
 .Backdrop {
   position: fixed;
@@ -18,7 +19,11 @@
   background-color: $modal;
   border: 0.1rem solid $card-border;
   border-radius: 1.6rem;
-  width: 60rem;
+  width: 90%;
+  max-width: 60rem;
   padding: 7rem;
   height: min-content;
+  @media screen and (max-width: $mobile) {
+    padding: 7rem;
+  }
 }

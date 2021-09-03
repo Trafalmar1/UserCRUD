@@ -1,4 +1,5 @@
 @import "styles/colors.scss";
+@import "styles/screenSizes.scss";
 
 .Title {
   margin-top: 6rem;
@@ -9,4 +10,7 @@
   width: 100%;
   text-align: center;
   color: $active;
+  @media screen and (max-width: $mobile) {
+    margin-bottom: 5rem;
+  }
 }

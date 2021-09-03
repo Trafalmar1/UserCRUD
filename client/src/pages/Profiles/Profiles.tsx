@@ -41,13 +41,13 @@ const Profiles = () => {
       </div>
       <Title>Profiles:</Title>
       <div className={classes.ProfilesContainer}>
+        <AddNewProfile onClick={toggleModal} />
         {Array.isArray(profiles) &&
           profiles
             ?.sort(sortByCreation)
             ?.map((profile) => (
               <ProfileCard key={profile?.id} profile={profile} />
             ))}
-        <AddNewProfile onClick={toggleModal} />
       </div>
       <ProfileModal visible={modalVisible} toggle={toggleModal} />
     </>

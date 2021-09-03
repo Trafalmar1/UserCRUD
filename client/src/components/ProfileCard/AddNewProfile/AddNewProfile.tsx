@@ -11,10 +11,10 @@ type Props = {
 
 const AddNewProfile: FC<Props> = ({ onClick }) => {
   return (
-    <div className={classes.Add} onClick={onClick}>
+    <section className={classes.Add} onClick={onClick}>
       <ReactSVG src={add} />
       <h3>Create new Profile</h3>
-    </div>
+    </section>
   );
 };
 
